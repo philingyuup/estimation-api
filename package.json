@@ -1,0 +1,53 @@
+{
+  "name": "microservices_template",
+  "version": "1.0.0",
+  "description": "boilerplate for nodejs microservices",
+  "main": "index.ts",
+  "scripts": {
+    "start": "ts-node index.ts",
+    "dev": "ts-node-dev index.ts",
+    "devWin": "set NODE_ENV='development' && ts-node-dev index.ts",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@types/dotenv": "^8.2.0",
+    "@types/express": "^4.17.12",
+    "@types/mongoose": "^5.11.97",
+    "axios": "^0.21.1",
+    "bcrypt": "*",
+    "cors": "^2.8.5",
+    "debug": "~2.6.9",
+    "dotenv": "^10.0.0",
+    "express": "^4.16.4",
+    "express-session": "^1.16.2",
+    "http-errors": "~1.6.3",
+    "jsonwebtoken": "^8.5.1",
+    "mime-types": "^2.1.24",
+    "mongoose": "^5.12.14",
+    "morgan": "^1.9.1",
+    "multer": "^1.4.2",
+    "multer-s3": "^2.9.0",
+    "node-cron": "^2.0.3",
+    "redis": "^3.1.2"
+  },
+  "devDependencies": {
+    "chai": "*",
+    "mocha": "*",
+    "ts-node": "^10.0.0",
+    "ts-node-dev": "^1.1.6",
+    "typescript": "^4.3.4"
+  },
+  "nodemonConfig": {
+    "restartable": "rs",
+    "ignore": [
+      "node_modules/**/node_modules"
+    ],
+    "delay": "2500",
+    "env": {
+      "NODE_ENV": "DEVELOPMENT",
+      "NODE_CONFIG_DIR": "./config"
+    }
+  },
+  "author": "",
+  "license": "ISC"
+}

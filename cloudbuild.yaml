@@ -1,0 +1,13 @@
+#Uncomment the lines and make appropriate changes
+
+# steps:
+# - name: gcr.io/cloud-builders/docker
+#   args: ['build', '-t', 'gcr.io/$PROJECT_ID/naya-app-backend:${SHORT_SHA}', '.']
+
+# - name: 'gcr.io/cloud-builders/docker'
+#   args: ["push", "gcr.io/$PROJECT_ID/naya-app-backend"]
+
+# - name: 'gcr.io/cloud-builders/gcloud'
+#   args: ['beta', 'run', 'deploy', 'naya-app-backend', '--image', 'gcr.io/$PROJECT_ID/naya-app-backend:${SHORT_SHA}', '--region', 'us-east1', '--platform', 'managed']
+# images:
+# - 'gcr.io/$PROJECT_ID/naya-app-backend'
