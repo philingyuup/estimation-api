@@ -9,14 +9,22 @@ export async function earlyEstimation(req: Request, res: Response) {
       "https://naya-early-estimation-tool-production-ybbseckska-ue.a.run.app/predict",
       payload
     );
+    
+    const range = parseInt(response.data.suggested_range.substring(4, 9))
 
+    const maxPrice = Math.ceil(parseInt(response.data.predicted_price.substring(1)) * (1 + range/100))
+    const minPrice = Math.ceil(parseInt(response.data.predicted_price.substring(1)) * (1 - range/100))
+   
     const estimation = new EstimationModel({
       ...payload,
-      predictedPrice: response.data.predicted_price,
-      priceRange: response.data.suggested_range,
+      predictedPrice: Math.ceil(response.data.predicted_price.substring(1)),
+      priceRange: range,
+      maxPrice : maxPrice,
+      minPrice : minPrice
     });
     estimation.save();
-    return res.status(200).json({ response: response.data });
+
+    return res.status(200).json({ response: estimation });
   } catch (error: any) {
     return res.status(400).json({ error: error.message });
   }
