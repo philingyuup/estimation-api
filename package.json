@@ -10,10 +10,11 @@
     "build": "tsc"
   },
   "dependencies": {
+    "@naya_studio/schemas": "^1.0.51",
     "@types/dotenv": "^8.2.0",
     "@types/express": "^4.17.12",
     "@types/mongoose": "^5.11.97",
-    "axios": "^0.21.1",
+    "axios": "^0.21.4",
     "bcrypt": "*",
     "cors": "^2.8.5",
     "debug": "~2.6.9",

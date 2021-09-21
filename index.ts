@@ -9,6 +9,7 @@ const morgan = require('morgan')
 //------------
 
 //import routes
+var estimationRouter = require('./src/routes/estimation');
 //------------
 
 const app: express.Application = express();
@@ -25,7 +26,7 @@ app.use(cors({
 
 
 //add routes and middleware to app
-
+app.use("/estimate", estimationRouter)
 //------------
 
 const port = process.env.PORT!;
