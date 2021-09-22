@@ -6,6 +6,6 @@ const router = express.Router();
 
 router.post("/", earlyEstimation)
 
-router.get("/all", getCountOfEstimates)
+router.get("/count", getCountOfEstimates)
 
 module.exports = router;
