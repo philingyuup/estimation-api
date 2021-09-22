@@ -41,3 +41,14 @@ export async function getCountOfEstimates(req : Request, res : Response){
     return res.status(400).json({error : error.message})
   }
 }
+
+export async function editEstimate(req : Request, res : Response) {
+  try {
+    const {estimateId, update} = req.body.payload
+    const estimate = await EstimationModel.findByIdAndUpdate(estimateId, update, {new : true})
+    return res.status(200).json({payload : estimate})
+  } catch (error : any) {
+    return res.status(400).json({error : error.message})
+    
+  }
+}
