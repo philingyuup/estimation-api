@@ -29,3 +29,15 @@ export async function earlyEstimation(req: Request, res: Response) {
     return res.status(400).json({ error: error.message });
   }
 }
+
+
+export async function getCountOfEstimates(req : Request, res : Response){
+  try {
+
+    const count = await EstimationModel.find().count()
+    return res.status(200).json({count : count})
+    
+  } catch (error : any) {
+    return res.status(400).json({error : error.message})
+  }
+}
