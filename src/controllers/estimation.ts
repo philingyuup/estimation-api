@@ -44,15 +44,35 @@ export async function earlyEstimation(req: Request, res: Response) {
       minPrice: calculatedMin
     }
 
-    // TODO: NEED TO CHANGE SCHEMA AND FINISH
+    const pricing1 = {
+      earlyEstPrice1 : predictedPrice1,
+      earlyEstRange1 : range1,
+      earlyEstMaxPrice1 : maxPrice1,
+      earlyEstMinPrice1 : minPrice1,
+    }
+
+    
+    const pricing100 = {
+      earlyEstPrice100 : predictedPrice100,
+      earlyEstRange100 : range100,
+      earlyEstMaxPrice100 : maxPrice100,
+      earlyEstMinPrice100 : minPrice100,
+    }
+    
     const estimation = new EstimationModel({
       ...payload,
       ...responseEstimation,
-      priceRange: range1,
+      ...pricing1,
+      ...pricing100
     });
-    estimation.save();
 
-    return res.status(200).json({ response: estimation });
+    estimation.save() .then((estimation: any) => {
+      return res.status(200).json({ response: estimation });
+    })
+    .catch((error: any) => {
+      return res.status(400).json({ error: error.message });
+    });
+
   } catch (error: any) {
     return res.status(400).json({ error: error.message });
   }
