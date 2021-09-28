@@ -13,12 +13,12 @@ export async function earlyEstimation(req: Request, res: Response) {
       throw new Error('Must include a quantity of at least 1 to estimate')
 
     // fetches the responses
-    const quantities = [1, 100, quantity]
+    const quantities = [1, 100]
     const promiseList = quantities.map(quantity => axios.post("https://naya-early-estimation-tool-production-ybbseckska-ue.a.run.app/predict", {
       ...payload,
       quantity
     }))
-    const [response1, response100, response] = await Promise.all(promiseList)
+    const [response1, response100] = await Promise.all(promiseList)
     
     // finds the pricing for quantity of 1
     const range1 = parseInt(response1.data.suggested_range.substring(4, 9))
@@ -58,21 +58,14 @@ export async function earlyEstimation(req: Request, res: Response) {
       earlyEstMaxPrice100 : maxPrice100,
       earlyEstMinPrice100 : minPrice100,
     }
-    // TODO: NEED TO CHANGE SCHEMA AND FINISH
+    
     const estimation = new EstimationModel({
       ...payload,
       ...responseEstimation,
       ...pricing1,
       ...pricing100
     });
-    console.log("!!!!!!!!!!!!!!!!!!!!!!!!!")
-    console.log("responseEstimation : ", responseEstimation)
-    console.log("!!!!!!!!!!!!!!!!!!!!!!!!!")
-    console.log("pricing1 : " ,pricing1)
-    console.log("!!!!!!!!!!!!!!!!!!!!!!!!!")
-    console.log("pricing100 : " ,pricing100)
-    console.log("!!!!!!!!!!!!!!!!!!!!!!!!!")
-    console.log("response : ", response.data)
+
     estimation.save();
 
     return res.status(200).json({ response: estimation });
