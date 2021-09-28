@@ -5,4 +5,4 @@
  * @param quantity - total quantity
  * @returns The estimated price for 1 unit (when ordering quantity)
  */
-const findEstimatedPriceAtQuantity = (priceAt1: number, priceAt100: number, quantity: number) => ((priceAt100 - priceAt1) / 99) * (quantity - 1) + priceAt1
+export const findEstimatedPriceAtQuantity = (priceAt1: number, priceAt100: number, quantity: number) => ((priceAt100 - priceAt1) / 99) * (quantity - 1) + priceAt1
