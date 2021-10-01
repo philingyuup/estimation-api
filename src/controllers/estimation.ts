@@ -9,9 +9,10 @@ export async function earlyEstimation(req: Request, res: Response) {
 
     const quantity = payload.quantity
 
+    let responseEstimation = {}
     if (!quantity || quantity < 1)
       throw new Error('Must include a quantity of at least 1 to estimate')
-
+ 
     // fetches the responses
     const quantities = [1, 100]
     const promiseList = quantities.map(quantity => axios.post("https://naya-early-estimation-tool-production-ybbseckska-ue.a.run.app/predict", {
@@ -32,16 +33,25 @@ export async function earlyEstimation(req: Request, res: Response) {
     const minPrice100 = Math.ceil(parseInt(response100.data.predicted_price.substring(1)) * (1 - range100 / 100))
     const predictedPrice100 = response100.data.predicted_price.substring(1)
 
-    // calculated pricing based on previous responses
-    const calculatedPrice = findEstimatedPriceAtQuantity(predictedPrice1, predictedPrice100, quantity)
-    const calculatedMin = findEstimatedPriceAtQuantity(minPrice1, minPrice100, quantity)
-    const calculatedMax = findEstimatedPriceAtQuantity(maxPrice1, maxPrice100, quantity)
+    if(quantity <= 100){
+      // calculated pricing based on previous responses 
+      const calculatedPrice = findEstimatedPriceAtQuantity(predictedPrice1, predictedPrice100, quantity)
+      const calculatedMin = findEstimatedPriceAtQuantity(minPrice1, minPrice100, quantity)
+      const calculatedMax = findEstimatedPriceAtQuantity(maxPrice1, maxPrice100, quantity)
 
-    // Needed for frontend display
-    const responseEstimation = {
-      predictedPrice: calculatedPrice,
-      maxPrice: calculatedMax,
-      minPrice: calculatedMin
+      // Needed for frontend display
+      responseEstimation = {
+        predictedPrice: calculatedPrice,
+        maxPrice: calculatedMax,
+        minPrice: calculatedMin
+      }
+    }else{
+      //use price as that for 100 items
+        responseEstimation = {
+        predictedPrice: predictedPrice100,
+        maxPrice: maxPrice100,
+        minPrice: minPrice100
+      }
     }
 
     const pricing1 = {
