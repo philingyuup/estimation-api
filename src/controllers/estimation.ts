@@ -76,7 +76,7 @@ export async function earlyEstimation(req: Request, res: Response) {
       ...pricing100
     });
 
-    estimation.save() .then((estimation: any) => {
+    estimation.save().then((estimation: any) => {
       return res.status(200).json({ response: estimation });
     })
     .catch((error: any) => {
